@@ -1,0 +1,10 @@
+| # | Vị trí                                   | Loại vấn đề                       | Mô tả hậu quả                                                                                                              |
+| - | ---------------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 1 | `<%! private int requestCounter = 0; %>` | **Race Condition / Shared State** | Biến này thuộc Servlet instance → **dùng chung cho tất cả user** → nhiều request cùng lúc sẽ gây sai số, không thread-safe |
+| 2 | `<% requestCounter++; %>`                | **Business logic trong View**     | JSP không nên xử lý logic → vi phạm nguyên tắc **Thin View**                                                               |
+| 3 | `<% List<Student> list = ... %>`         | **Scriptlet (Code smell)**        | Lấy dữ liệu bằng Java code trong JSP → khó maintain, không đúng chuẩn MVC                                                  |
+| 4 | `<%= sv.getFullName() %>`                | **XSS Vulnerability**             | Nếu tên chứa `<script>` → có thể bị inject JS → nguy hiểm bảo mật                                                          |
+| 5 | `<%= sv.getScore()%>;`                   | **Syntax lỗi / Output sai**       | Dư dấu `;` → hiển thị sai dữ liệu (VD: `75;`)                                                                              |
+| 6 | Vòng `for + if else` trong JSP           | **Logic xử lý trong View**        | Vi phạm MVC: View chỉ nên hiển thị, không xử lý nghiệp vụ                                                                  |
+| 7 | `<!-- comment -->`                       | **Sai loại comment**              | HTML comment vẫn render ra client → lộ thông tin nội bộ                                                                    |
+| 8 | `<%= title %>`                           | **Không dùng EL**                 | Không tận dụng EL → code khó đọc, lỗi thời                                                                                 |
